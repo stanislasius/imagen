@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>org.imagen.Imagen</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>MIT</project_license>
+
+  <name>imagen</name>
+  <summary>Capture the screen and annotate the result</summary>
+
+  <description>
+    <p>
+      imagen takes screenshots on Linux and lets you annotate them right away.
+      It works on Wayland through the XDG desktop portal and on X11 directly.
+    </p>
+    <ul>
+      <li>Capture the full desktop, a single monitor, a window or a region</li>
+      <li>Repeat the previous capture or reuse a fixed region</li>
+      <li>Annotate with arrows, lines, rectangles, ellipses, text and a freehand pen</li>
+      <li>Apply effects such as blur, pixelate, sharpen, invert or colour adjustments</li>
+      <li>Send the result to the clipboard, to a file, to a folder or to another program</li>
+    </ul>
+  </description>
+
+  <launchable type="desktop-id">org.imagen.Imagen.desktop</launchable>
+
+  <categories>
+    <category>Graphics</category>
+    <category>Photography</category>
+  </categories>
+
+  <keywords>
+    <keyword>screenshot</keyword>
+    <keyword>capture</keyword>
+    <keyword>screen</keyword>
+    <keyword>annotate</keyword>
+  </keywords>
+
+  <provides>
+    <binary>imagen</binary>
+  </provides>
+
+  <content_rating type="oars-1.1"/>
+
+  <releases>
+    <release version="0.1.0" date="2026-11-05">
+      <description>
+        <p>First milestone: capture backends for Wayland and X11, global shortcuts, tray icon and a basic image editor.</p>
+      </description>
+    </release>
+  </releases>
+</component>

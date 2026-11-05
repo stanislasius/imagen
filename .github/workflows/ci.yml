@@ -1,0 +1,66 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build and test
+    runs-on: ubuntu-24.04
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            build-essential \
+            cmake \
+            ninja-build \
+            qt6-base-dev \
+            qt6-base-dev-tools \
+            libx11-dev \
+            libxext-dev \
+            libgl1-mesa-dev
+
+      - name: Configure
+        run: >
+          cmake -S . -B build
+          -G Ninja
+          -DCMAKE_BUILD_TYPE=RelWithDebInfo
+          -DIMAGEN_WARNINGS_AS_ERRORS=ON
+
+      - name: Build
+        run: cmake --build build --parallel
+
+      - name: Test
+        run: ctest --test-dir build --output-on-failure
+
+      - name: Install
+        run: sudo cmake --install build --prefix /usr
+
+      - name: Check the desktop entry
+        run: desktop-file-validate /usr/share/applications/org.imagen.Imagen.desktop || true
+
+  style:
+    name: Code style
+    runs-on: ubuntu-24.04
+    # The sources follow .clang-format. The check is informational until
+    # the whole tree has been reformatted once.
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends clang-format
+
+      - name: Check the formatting
+        run: |
+          find src tests -name '*.cpp' -o -name '*.h' | \
+            xargs clang-format --dry-run --Werror

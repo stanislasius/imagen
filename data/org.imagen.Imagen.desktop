@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Application
+Name=imagen
+GenericName=Screenshot tool
+Comment=Capture the screen and annotate the result
+Exec=imagen
+Icon=org.imagen.Imagen
+Terminal=false
+Categories=Graphics;Photography;Utility;
+Keywords=screenshot;capture;screen;shot;annotate;crop;print;
+StartupNotify=false
+StartupWMClass=imagen
+X-GNOME-UsesNotifications=true

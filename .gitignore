@@ -1,0 +1,21 @@
+# Build output
+build/
+build-*/
+cmake-build-*/
+*.user
+.cache/
+compile_commands.json
+
+# Proprietary reference material used for clean-room analysis only.
+# Never commit: the upstream Windows binaries and their assets are not ours.
+/picpick_portable/
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*~
+
+# OS
+.DS_Store
+Thumbs.db

@@ -6,6 +6,40 @@
 
 ---
 
+## 0. Progress
+
+The implementation lives in this repository. The current state is tracked in
+the status table of the [README](README.md); the architecture is described
+in [docs/architecture.md](docs/architecture.md).
+
+| Date | Milestone | State |
+|---|---|---|
+| 2026-11-05 | M0 — Scaffolding | done |
+| 2026-11-05 | M1 — Capture MVP | in progress (capture backends, outputs, tray, global shortcuts working) |
+| 2026-11-05 | M2 — Editor core | started (image window only) |
+
+### Resolved open questions (§11)
+
+| Question | Decision |
+|---|---|
+| 1. Application name | **imagen**, application id `org.imagen.Imagen` |
+| 2. Language | **C++17 with Qt 6** — no Rust toolchain, and the Qt bindings for Widgets/QPainter/QDBus are far weaker than native Qt |
+| 3. Distribution priority | **all at M5** (Flatpak, deb, rpm, AppImage) |
+| 4. Target DE breadth | **KDE first, GNOME best effort** (as designed in §3 and §6) |
+| 5. Minimum Qt version | **Qt 6.5**, developed against 6.8 |
+| 6. "Open from URL" | **deferred to M3/M4** |
+
+### Decisions taken during the implementation
+
+| Decision | Reason |
+|---|---|
+| The `handle_token` of a portal request must only contain `[A-Za-z0-9_]` | it becomes the last element of an object path; a dot or a dash crashes xdg-desktop-portal |
+| The shortcut list of the GlobalShortcuts portal is marshalled from `QList<std::pair<QString, QVariantMap>>` | this is the type the portal documents, and it produces the required `a(sa{sv})` |
+| The portal connection handle is kept for the lifetime of the client | dropping it closes the bus connection while calls are still in flight |
+| The backend is chosen by session type, not by availability | on X11 the direct backend is faster and offers the pointer and a client side region picker |
+
+---
+
 ## 1. Background & Goal
 
 PicPick (Windows) is a screenshot capture + image editing suite. No Linux equivalent combines capture, annotation editor, and overlay measuring tools in one app. This project is a **clean-room reimplementation** of the retained feature set for Linux, targeting **Wayland (KDE Plasma) first**, with X11 support.
